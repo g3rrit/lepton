@@ -18,10 +18,14 @@ impl Lexer {
         }
     }
     
+    fn next_token(&mut self) -> Token {
+        Token::LCB
+    }
+    
     pub fn next(&mut self) -> Rc<Token> {
         let res = match self.from.pop() {
             Some(tok) => tok,
-            None => Rc::new(self.input.next()),
+            None => Rc::new(self.next_token()),
         };
         
         if let Token::EOF = *res {
@@ -41,5 +45,9 @@ impl Lexer {
                 }
             }
         }
+    }
+    
+    pub fn commit(&mut self) {
+        self.to.clear();
     }
 }

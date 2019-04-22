@@ -9,6 +9,12 @@ pub enum Token {
 }
 
 impl Token {
+    fn get(input: &Input) -> Token {
 
+    }
+    
+    fn get_id(input: &Input) -> Option<Token> {
+        
+    }
 }
 
