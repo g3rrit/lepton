@@ -1,3 +1,7 @@
+use crate::node::Node;
+use std::fmt::Display;
+
+#[derive(Display)]
 pub enum Token {
     ID(String),
     STR(String),
@@ -5,16 +9,11 @@ pub enum Token {
     INT(u64),
     FLOAT(f64),
     EOF,
-    LCB,
 }
 
-impl Token {
-    fn get(input: &Input) -> Token {
-
-    }
-    
-    fn get_id(input: &Input) -> Option<Token> {
-        
+impl Node for Token {
+    type Element = Token;
+    fn get(&self) -> Token {
+        self
     }
 }
-
