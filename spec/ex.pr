@@ -21,7 +21,7 @@ enum foo_e {
 dec foo: i32
 
 // FUNCTION
-dec bar() -> void
+dec bar(f64) -> void
 
 // DEFINITIONS
 
@@ -32,7 +32,7 @@ foo: u8
 // FUNCTION
 main() -> void
 | i: int
-  b: bar = 10 | {
+  b: bar = 10  {
 
   // EXPRESSION STM
   set x add 10 2
@@ -42,6 +42,12 @@ loop:
 
   // JUMP STM
   (eq 1 1):loop
+
+  // BLOCK STM
+  | f: () -> u16
+    k: u8 {
+    print "block"
+  }
 
 
   // RET STM
