@@ -1,0 +1,49 @@
+
+// TYPE DECLARATIONS
+
+struct foo_t {
+  x: i32,
+  y: u32
+}
+
+union foo_u {
+  n: usize,
+}
+
+enum foo_e {
+  ONE,
+  TWO
+}
+
+// DECLARATIONS
+
+// VARIABLE
+dec foo: i32
+
+// FUNCTION
+dec bar() -> void
+
+// DEFINITIONS
+
+// VARIABLE
+foo: u32 = 10
+foo: u8
+
+// FUNCTION
+main() -> void
+| i: int
+  b: bar = 10 | {
+
+  // EXPRESSION STM
+  set x add 10 2
+
+  // LABLE STM
+loop:
+
+  // JUMP STM
+  (eq 1 1):loop
+
+
+  // RET STM
+  ret 0;
+}
