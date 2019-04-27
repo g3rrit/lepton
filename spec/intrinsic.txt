@@ -1,0 +1,297 @@
+
+
+//---------------------------------------
+// TYPE_INTRINSICS
+//---------------------------------------
+
+// -- PRIMITIVES ------------------------
+// these get constructed
+// by the parser and the
+// initial symbol resolver
+
+<IDENTIFIER>
+symbol:
+  <id>
+traits:
+  val() -> String
+</IDENTIFIER>
+
+<STRING>
+symbol:
+  <str>
+traits:
+  val() -> String
+</STRING>
+
+<CHAR>
+symbol:
+  <char>
+traits:
+  val() -> Char
+</CHAR>
+
+<INTEGER>
+symbol:
+  <int>
+traits:
+  val() -> i64
+<INTEGER>
+
+<FLOAT>
+symbol:
+  <float>
+traits:
+  val() -> f64
+</FLOAT>
+
+<OPERATOR>
+symbol:
+  <op>
+traits:
+  val() -> String
+</OPERATOR>
+
+<KEYWORD>
+symbol:
+  <key>
+traits:
+  val() -> String
+</KEYWORD>
+
+<TYPE_IDENTIFER>
+symbol:
+  <tid>
+traits():
+  val() -> <type>
+</TYPE_IDENTIFER>
+
+<VARIABLE_IDENTIFIER>
+symbol:
+  <vid>
+traits():
+  val() -> <var>
+</VARIABLE_IDENTIFIER>
+
+<FUNCTION_IDENTIFIER>
+symbol:
+  <fid>
+traits:
+  val() -> <fun>
+</FUNCTION_IDENTIFIER>
+
+<MACRO_IDENTIFIER>
+symbol:
+  <mid>
+traits:
+  val() -> <macro>
+</MACRO_IDENTIFIER>
+
+// --  ----------------------------------
+
+<TYPE>
+| INTRINSIC_TYPE = 0
+| POINTER_TYPE   = 1
+| ARRAY_TYPE     = 2
+| COMPOUND_TYPE  = 3
+| FUNCTION_TYPE  = 4
+symbol:
+  <type>
+traits:
+  size() -> usize
+  tag() -> usize
+
+<INTRINSIC_TYPE>
+| INT              = 0
+| UINT             = 1
+| I(8, 16, 32, 64) = 2
+| U(8, 16, 32, 64) = 3
+| F(32, 64)        = 4
+| BOOL             = 5
+symbol:
+  <itype>
+traits:
+  size() -> usize
+  tag() -> usize
+</INTRINSIC_TYPE>
+
+<POINTER_TYPE>
+symbol:
+  <ptype>
+traits:
+  size() -> usize
+  type() -> <type>
+inf:
+  (<op| val = "*">, type: <type>) -> <ptype>
+</POINTER_TYPE>
+
+<ARRAY_TYPE>
+symbol:
+  <atype>
+traits:
+  size() -> usize
+  type() -> <type>
+  len() -> <exp>
+inf:
+  (<op| val = "[">, type: <type>, <op| val = ",">, len: <exp| type.tag = INTRINSIC_TYPE, type.itype.tag = uint>, <op| val = "]">) -> <atype>
+</ARRAY_TYPE>
+
+<COMPOUND_TYPE>
+symbol:
+  <ctype>
+traits:
+  size() -> usize
+  def() -> <tdef>
+inf:
+  (id: <tid>) -> ctype
+</COMPOUND_TYPE>
+
+<FUNCTION_TYPE>
+symbol:
+  <ftype>
+traits:
+  size() -> usize
+  type() -> <type>
+  params() -> <list| tag = TYPE>
+inf:
+  (<op| val = "(">, params: <list| tag = VARIABLE>, <op| val = ")">, <op| val = "->">, type: <otype>) -> <ftype>
+</FUNCTION_TYPE>
+
+<OPTION_TYPE>
+| SOME_TYPE
+| VOID_TYPE
+symbol:
+  <otype>
+traits:
+
+<VOID_TYPE>
+symbol:
+  <vtype>
+traits:
+inf:
+  (<mid| val = "void">) -> <vtype>
+</VOID_TYPE>
+
+<SOME_TYPE>
+symbol:
+  <stype>
+traits:
+  type() -> <type>
+inf:
+  (type: <type>) -> <stype>
+</SOME_TYPE>
+</OPTION_TYPE>
+
+
+<VARIABLE>
+symbol:
+  <var>
+traits:
+  id() -> <id>
+  type() -> <type>
+inf:
+  (id: <id>, <op| val = ":">, type: <type>) -> <var>
+</VARIABLE>
+
+<TYPE_DECLARATION>
+| STRUCT_DECL = 0
+| UNION_DECL  = 1
+| ENUM_DECL   = 2
+symbol:
+  <tdecl>
+traits:
+  id() -> <id>
+  size() -> usize
+  alignment() -> usize
+
+<STRUCT_DECL>
+symbol:
+  <sdecl>
+traits:
+  id() -> <id>
+  vars() -> <list| tag = VARIABLE>
+  size() -> usize
+  alignment() -> usize
+  offset() -> [usize]
+inf:
+  (<mid| val = "s">, id: <id>, <op| val = "{">, vars: <list| tag = VARIABLE>, <op| val = "}">) -> <sdecl>
+</STRUCT_DECL>
+
+<UNION_DECL>
+symbol:
+  <udecl>
+traits:
+  id() -> <id>
+  vars() -> <list| tag = VARIABLE>
+  size() -> usize
+  alignment() -> usize
+  offset() -> [usize]
+inf:
+  (<mid| val = "u">, id: <id>, <op| val = "{">, vars: <list| tag = VARIABLE>, <op| val = "}">) -> <udecl>
+</UNION_DECL>
+
+<ENUM_DECL>
+symbol:
+  <edecl>
+traits:
+  id() -> <id>
+  size() -> usize
+  alignment() -> usize
+inf:
+  (<mid| val = "e">, id: <id>, <op| val = "{">, vars: <list| tag = id>, <op| val = "}">) -> <udecl>
+</ENUM_DECL>
+</TYPE_DECLARATION>
+
+<FUNCTION>
+
+</FUNCTION>
+
+<STATEMENT>
+| EXPRESION_STATEMENT
+| LABEL_STATEMENT
+| JUMP_STATEMENT
+| BLOCK_STATEMENT
+symbol:
+  <stm>
+traits:
+
+<EXPRESSION_STATEMENT>
+symbol:
+  <estm>
+traits:
+  exp() -> <exp>
+inf:
+  (exp: <exp| type.tag = VOID_TYPE>) -> <estm>
+</EXPRESSION_STATEMENT>
+
+<LABEL_STATEMENT>
+</LABEL_STATEMENT>
+
+<JUMP_STATEMENT>
+</JUMP_STATEMENT>
+
+<BLOCK_STATEMENT>
+</BLOCK_STATEMENT>
+</STATEMENT>
+
+<EXPRESSION>
+| for everything the interpreter can do so this list is gonna be long
+traits:
+  type() -> otype
+</EXPRESSION>
+
+
+-MACRO_TYPE-
+
+
+
+//---------------------------------------
+// FUNCTION_INTRINSICS
+//---------------------------------------
+
+
+// NOTES:
+
+[csm] ( exp 1 2 ) returns a expression statement by consuming the return values of the expression
+other expression statements are expressions with no return value (or void)
+
+a expression with a expression as its destionation addrs is a call expression
