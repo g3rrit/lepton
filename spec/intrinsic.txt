@@ -44,47 +44,75 @@ traits:
   val() -> f64
 </FLOAT>
 
-<OPERATOR>
+<OPERATOR>   char code desc
+| <op_em>    !    33   exclamation mark
+| <op_ns>    #    35   number sign, pound
+| <op_ds>    $    36   dollar sign
+| <op_pc>    %    37   percent sign
+| <op_am>    &    38   ampersand
+| <op_lp>    (    40   left paranthesis
+| <op_rp>    )    41   right paranthesis
+| <op_as>    *    42   asterix
+| <op_ps>    +    43   plus sign
+| <op_cm>    ,    44   comma
+| <op_ms>    -    45   minus sign
+| <op_dp>    .    46   decimal point
+| <op_sl>    /    47   slash
+| <op_co>    :    58   colon
+| <op_se>    ;    59   semicolon
+| <op_lt>    <    60   less-than sign
+| <op_eq>    =    61   equal sign
+| <op_gt>    >    62   greater-than sign
+| <op_qm>    ?    63   question mark
+| <op_at>    @    64   commercial sign
+| <op_ls>    [    91   left square bracket
+| <op_bs>    \    92   backslash
+| <op_rs>    ]    93   right square bracket
+| <op_ci>    ^    94   circumflex
+| <op_us>    _    95   underscore
+| <op_lb>    {    123  left brace
+| <op_vb>    |    124  vertical bar
+| <op_rb>    }    125  right brace
+| <op_ti>    ~    126  tilde
 symbol:
   <op>
 traits:
-  val() -> String
 </OPERATOR>
-
-<KEYWORD>
-symbol:
-  <key>
-traits:
-  val() -> String
-</KEYWORD>
 
 <TYPE_IDENTIFER>
 symbol:
   <tid>
 traits():
-  val() -> <type>
+  val() -> &<tdef>
 </TYPE_IDENTIFER>
 
 <VARIABLE_IDENTIFIER>
 symbol:
   <vid>
 traits():
-  val() -> <var>
+  val() -> &<var>
 </VARIABLE_IDENTIFIER>
 
 <FUNCTION_IDENTIFIER>
 symbol:
   <fid>
 traits:
-  val() -> <fun>
+  val() -> &<fun>
 </FUNCTION_IDENTIFIER>
 
 <MACRO_IDENTIFIER>
 symbol:
   <mid>
 traits:
-  val() -> <macro>
+  val() -> &<macro>
 </MACRO_IDENTIFIER>
+
+<LABEL_IDENTIFIER>
+symbol:
+  <lid>
+traits:
+  val() -> &<lstm>
+</LABEL_IDENTIFIER>
 
 // --  ----------------------------------
 
@@ -242,7 +270,15 @@ inf:
 </TYPE_DECLARATION>
 
 <FUNCTION>
-
+symbol:
+  <fn>
+traits:
+  id() -> <id>
+  params() -> <list| tag = VAR>
+  type() -> <type>
+  body() -> <bstm>
+inf:
+  (id: <id>, <op_lp>, <list| tag = VAR, sep = OP_CM>, <op_rp>, <op_ms>, <op_gt>, type: <type>, body: <bstm>) -> <fn>
 </FUNCTION>
 
 <STATEMENT>
@@ -264,29 +300,71 @@ inf:
 </EXPRESSION_STATEMENT>
 
 <LABEL_STATEMENT>
+symbol:
+  <lstm>
+traits:
+  id() -> &<id>
+inf:
+  (id: <id>, <op_co>) -> <lstm>
 </LABEL_STATEMENT>
 
 <JUMP_STATEMENT>
+symbol:
+  <jstm>
+traits:
+  label() -> &<label>
+inf: [sdf>sdf]
+  (<op_ls>, inv: <exp>, <op_gt>, lid: <lid>, <op_rs>) -> jstm
 </JUMP_STATEMENT>
 
 <BLOCK_STATEMENT>
+symbol:
+  <bstm>
+traits:
+  vars() -> <list| tag = VAR>
+  stms() -> <list| tag = STM>
+inf:
+  (<op_vb, stms: <list| tag = VAR, sep = OP_CM>, <op_lb>, <list| tag = STM>, <op_rb>) -> <bstm>
 </BLOCK_STATEMENT>
 </STATEMENT>
 
 <EXPRESSION>
 | for everything the interpreter can do so this list is gonna be long
 traits:
-  type() -> otype
+  type() -> <otype>
 </EXPRESSION>
-
-
--MACRO_TYPE-
-
 
 
 //---------------------------------------
 // FUNCTION_INTRINSICS
 //---------------------------------------
+
+- create intrinsic types:
+t_int() -> <int>
+t_uint() -> <uint>
+t_u8() -> <u8>
+t_i8() -> <i8>
+t_u16() -> <u16>
+t_i16() -> <i16>
+t_u32() -> <u32>
+t_i32() -> <i32>
+t_u64() -> <u64>
+t_i64() -> <i64>
+t_f32() -> <f32>
+t_f32() -> <f32>
+t_f64() -> <f64>
+t_bool() -> <bool>
+t_void() -> <void>
+
+- create pointer type
+tp(type: <type>) -> <ptype>
+
+- create array type
+ta(type: <type>, len: <exp| type.tag = INTRINSIC_TYPE>) -> <atype>
+
+- create function type
+ft(<op| val = "(">, params: <list| tag = VARIABLE>, <op| val = ")">, type: <otype>) -> <ftype>
+
 
 
 // NOTES:

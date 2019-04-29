@@ -2,6 +2,7 @@
 use crate::node::{ Node, RefNode };
 use crate::lexer::Lexer;
 use crate::token::Token;
+use crate::util::*;
 
 pub trait Parser<T> {
     fn parse(&self, lexer: &mut Lexer) -> Option<Box<T>>;
@@ -11,7 +12,7 @@ pub type RefParser<T> = Box<Parser<T>>;
 // -- OR_PARSER -------------------------
 
 struct OrParser<T> {
-    comb_vec: Vec<RefParser<T>>,
+    comb_vec: Vec<RefParser<void>>,
 }
 
 impl Parser<T> for OrParser<T> {
