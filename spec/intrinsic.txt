@@ -58,7 +58,7 @@ traits:
 | <op_ms>    -    45   minus sign
 | <op_dp>    .    46   decimal point
 | <op_sl>    /    47   slash
-| <op_co>    :    58   colon
+| <op_cn>    :    58   colon
 | <op_se>    ;    59   semicolon
 | <op_lt>    <    60   less-than sign
 | <op_eq>    =    61   equal sign
@@ -73,7 +73,7 @@ traits:
 | <op_lb>    {    123  left brace
 | <op_vb>    |    124  vertical bar
 | <op_rb>    }    125  right brace
-| <op_ti>    ~    126  tilde
+| <op_td>    ~    126  tilde
 symbol:
   <op>
 traits:
