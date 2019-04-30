@@ -1,4 +1,6 @@
 #![allow(dead_code)]
+#![allow(non_camel_case_types)]
+#![allow(non_snake_case)]
 
 #[macro_use]
 mod util;
@@ -7,6 +9,7 @@ mod token;
 mod lexer;
 mod parser;
 mod node;
+mod tag;
 
 use input::*;
 use util::*;
@@ -34,11 +37,5 @@ fn main() {
   
   println!("read: {}", input.next().unwrap());
 
-  let id_parser : IdParser =  IdParser::new();
-  let mut lexer = Lexer::new();
-  let res = id_parser.parse(&mut lexer);
-  match res {
-    Some((n, node)) => println!("n: {} node: {}", n, node),
-    None => println!("didnt match id"),
-  }
+  let mut lexer = Lexer::new(input);
 }

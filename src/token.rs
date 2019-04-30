@@ -1,7 +1,6 @@
-use crate::node::Node;
-use std::fmt::Display;
+#[macro_use]
 
-#[derive(Display)]
+#[derive(Debug)]
 pub enum Token {
   ID(String),
   STR(String),

@@ -19,7 +19,7 @@ impl Lexer {
     }
     
     fn next_token(&mut self) -> Token {
-        Token::ID("lol")
+        Token::ID(String::from("lol"))
     }
     
     pub fn next(&mut self) -> Rc<Token> {
