@@ -3,11 +3,11 @@ use crate::token::Token;
 use crate::tag::Tagged;
 use crate::node::*;
 use crate::util::*;
+use crate::env::Env;
 use std::rc::Rc;
 
 pub trait Parser {
-  type Item;
-  fn parse(lexer: &mut Lexer) -> Option<Item>;
+  fn parse(lexer: &mut Env) -> Option<Node>;
 }
 
 /*

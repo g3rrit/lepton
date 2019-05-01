@@ -2,12 +2,15 @@
 
 #[derive(Debug)]
 pub enum Token {
-  ID(String),
-  STR(String),
-  CHAR(char),
-  INT(u64),
-  FLOAT(f64),
-  EOF,
+  ID(String),   //                        id
+  IFID(String), // Intrinsic function ID [fn]
+  ITID(String), // Intrinsic type ID     <ty>
+  STR(String),  //                       "st"
+  CHAR(char),   //                       'c'
+  INT(u64),     //                        10
+  FLOAT(f64),   //                        1f
+  EOF, 
+
   // OPERATORS
   OP_EM, //    !    33   exclamation mark
   OP_NS, //    #    35   number sign, pound

@@ -10,7 +10,7 @@ pub struct FnTable {
 }
 
 impl FnTable {
-  pub fn get(&self, id: &str) -> Vec<Rc<FnNode>> {
+  pub fn get(&self, id: &IdNode) -> Vec<Rc<FnNode>> {
     Vec::new()
   }
 }
@@ -24,7 +24,7 @@ pub struct VarTable {
 }
 
 impl VarTable {
-  pub fn get(&self, id: &str) -> Vec<Rc<VarNode>> {
+  pub fn get(&self, id: &IdNode) -> Vec<Rc<VarNode>> {
     Vec::new()
   }
 }
@@ -38,7 +38,7 @@ pub struct InTable {
 }
 
 impl InTable {
-  pub fn get(&self, id: &str) -> Vec<Rc<InNode>> {
+  pub fn get(&self, id: &IdNode) -> Vec<Rc<InNode>> {
     Vec::new()
   }
 }
@@ -52,7 +52,7 @@ pub struct MacTable {
 }
 
 impl MacTable {
-  pub fn get(&self, id: &str) -> Vec<Rc<MacNode>> {
+  pub fn get(&self, id: &IdNode) -> Vec<Rc<MacNode>> {
     Vec::new()
   }
 }
