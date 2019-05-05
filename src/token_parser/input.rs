@@ -5,8 +5,6 @@ use std::io::BufRead;
 use std::path::Path;
 use std::path::PathBuf;
 
-use crate::token::*;
-
 pub struct Input {
     path: PathBuf,
     reader: BufReader<File>,

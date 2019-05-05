@@ -4,21 +4,16 @@
 
 #[macro_use]
 mod util;
-mod input;
-mod token;
-mod lexer;
-mod parser;
-mod node;
-mod tag;
 
-use input::*;
-use util::*;
-use parser::*;
-use lexer::*;
+mod token_parser;
+mod node_parser;
 
+mod fstack;
 
 
 fn main() {
+  
+  use token_parser::input::*;
 
   let mut input = Input::new("test_files/test.txt");
   
@@ -37,5 +32,4 @@ fn main() {
   
   println!("read: {}", input.next().unwrap());
 
-  let mut lexer = Lexer::new(input);
 }

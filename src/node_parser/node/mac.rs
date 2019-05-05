@@ -25,7 +25,7 @@ impl MacNode {
         return None;
       }
     }
-
+    self.eval
 
 }
 }
