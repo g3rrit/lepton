@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["pearisgreen <gerrit.proessl@gmail.com>"]
 
 [dependencies]
+macro_lib = { path = "macro_lib" }
