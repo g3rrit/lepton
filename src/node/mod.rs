@@ -1,3 +1,5 @@
+use crate::node_parser::Parser;
+
 
 //---------------------------------------
 // NODE
@@ -14,44 +16,37 @@ pub enum Node {
   
   // OPERATORS
   OP_EM(OpEmNode), //    !    33   exclamation mark
-  OP_NS(OpNsNode), //    #    35   number sign, pound
-  OP_DS(OpDsNode), //    $    36   dollar sign
   OP_PC(OpPcNode), //    %    37   percent sign
   OP_AM(OpAmNode), //    &    38   ampersand
-  OP_LP(OpLpNode), //    (    40   left paranthesis
-  OP_RP(OpRpNode), //    )    41   right paranthesis
   OP_AS(OpAsNode), //    *    42   asterix
   OP_PS(OpPsNode), //    +    43   plus sign
-  OP_CM(OpCmNode), //    ,    44   comma
   OP_MS(OpMsNode), //    -    45   minus sign
   OP_DP(OpDpNode), //    .    46   decimal point
   OP_SL(OpSlNode), //    /    47   slash
   OP_CN(OpCnNode), //    :    58   colon
   OP_SE(OpSeNode), //    ;    59   semicolon
-  OP_LT(OpLtNode), //    <    60   less-than sign
   OP_EQ(OpEqNode), //    =    61   equal sign
-  OP_GT(OpGtNode), //    >    62   greater-than sign
   OP_QM(OpQmNode), //    ?    63   question mark
   OP_AT(OpAtNode), //    @    64   commercial sign
-  OP_LS(OpLsNode), //    [    91   left square bracket
   OP_BS(OpBsNode), //    \    92   backslash
-  OP_RS(OpRsNode), //    ]    93   right square bracket
   OP_CI(OpCiNode), //    ^    94   circumflex
   OP_US(OpUsNode), //    _    95   underscore
-  OP_LB(OpLbNode), //    {    123  left brace
   OP_VB(OpVbNode), //    |    124  vertical bar
-  OP_RB(OpRbNode), //    }    125  right brace
   OP_TD(OpTdNode), //    ~    126  tilde
 
   // TYPES
   TY(TyNode),
-  ITY(ITyNode), // Intrinsic Type
+  MTY(MTyNode), // Primitive Type
   PTY(PTyNode), // Pointer Type
   ATY(ATyNode), // Array Type
   CTY(CTyNode), // Compound Type
   FTY(FTyNode), // Function Type
   OTY(OTyNode), // Option Type
   VTY(VTyNode), // Void Type
+  ITY(ITyNode), // Intrinsic Type
+  
+  // LIST
+  LIST(ListNode),
 
   // VARIABLE
   VAR(VarNode), // Variable
@@ -67,9 +62,6 @@ pub enum Node {
   
   // MACRO 
   MAC(MacNode),
-  
-  // INTRINSIC_TYPE
-  INTY(InTyNode), 
   
   // DATA_NODE (VARIABLE WITH DATA)
   DATA(DataNode),
@@ -128,6 +120,7 @@ pub struct OpTdNode; //    ~    126  tilde
 
 // TYPES
 pub struct TyNode;
+pub struct MTyNode; // Primitive Type
 pub struct ITyNode; // Intrinsic Type
 pub struct PTyNode; // Pointer Type
 pub struct ATyNode; // Array Type
@@ -135,6 +128,9 @@ pub struct CTyNode; // Compound Type
 pub struct FTyNode; // Function Type
 pub struct OTyNode; // Option Type
 pub struct VTyNode; // Void Type
+
+// LIST
+pub struct ListNode;
 
 // VARIABLE
 pub struct VarNode; // Variable

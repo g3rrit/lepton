@@ -3,8 +3,8 @@
 #[derive(Debug)]
 pub enum Token {
   ID(String),   //                        id
-  IFID(String), // Intrinsic function ID [fn]
-  ITID(String), // Intrinsic type ID     <ty>
+  FID(String),  // Intrinsic function ID #id
+  TID(String),  // Intrinsic type ID     $id
   STR(String),  //                       "st"
   CHAR(char),   //                       'c'
   INT(u64),     //                        10
@@ -13,8 +13,6 @@ pub enum Token {
 
   // OPERATORS
   OP_EM, //    !    33   exclamation mark
-  OP_NS, //    #    35   number sign, pound
-  OP_DS, //    $    36   dollar sign
   OP_PC, //    %    37   percent sign
   OP_AM, //    &    38   ampersand
   OP_LP, //    (    40   left paranthesis

@@ -1,10 +1,13 @@
-mod node;
-use self::node::*;
+use crate::env::Env;
+use crate::node::*;
 
 use crate::fstack::*;
 use std::rc::Rc;
 use crate::token_parser::TokenParser;
 
+pub trait Parser {
+  fn parse(input: &mut NodeParser, env: &mut Env) -> Option<Rc<Node>>;
+}
 
 pub struct NodeParser {
   input: TokenParser,

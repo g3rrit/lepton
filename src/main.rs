@@ -5,36 +5,18 @@
 #[macro_use]
 mod util;
 
+mod env;
+
 mod token_parser;
 mod node_parser;
+mod node;
 
 mod fstack;
 
 extern crate macro_lib;
 use macro_lib::*;
 
-struct One;
-impl One { fn parse(&self) -> Option<()> { println!("lol inone"); None } }
-
-struct Two;
-impl Two { fn parse(&self) -> Option<()> { println!("lol intwo"); None } }
-
-trait Parser {
-  fn parse(&self) -> Option<()>;
-}
-
-#[derive(EnumParser)]
-enum TestE {
-  ONE(One),
-  TWO(Two),
-}
-
-
-
 fn main() {
-  
-  let foo = TestE::ONE(One);
-  foo.parse();
   
   use token_parser::input::*;
 
