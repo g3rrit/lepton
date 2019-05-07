@@ -47,24 +47,38 @@ pub enum Node {
   
   // LIST
   LIST(ListNode),
+  PLIST(PListNode), // Paranthesis List ( )
+  BLIST(BListNode), // Bracket List { }
+  SLIST(SListNode), // Square Bracket List [ ]
+  ALIST(AListNode), // Angle Bracket List < >
 
   // VARIABLE
   VAR(VarNode), // Variable
 
   // TYPE_DECLARATION
-  TDEC(TdecNode),   // Type Declaration
-  STDEC(STdecNode), // Struct Type Declaration
-  UTDEC(UTdecNode), // Union Type Declaration
-  ETDEC(ETdecNode), // Enum Type Declaration
+  TDCL(TdclNode), // Type Declaration
+  SDCL(SdclNode), // Struct Type Declaration
+  UDCL(UdclNode), // Union Type Declaration
+  EDCL(EdclNode), // Enum Type Declaration
+  
+  // TYPE_ALIASING
+  TYPE(TypeNode),
+  
+  // TYPE_FORWARD_DECLARATION
+  TFDCL(TfdclNode), // Type Forward Declaration
+  SFDCL(SfdclNode), // Struct Forward Declaration
+  UFDCL(UfdclNode), // Union Forward Declaration
+  EFDCL(EfdclNode), // Enum Forward Declaration
   
   // FUNCTION
   FN(FnNode),
   
+  // DECLARATIONS
+  FNDCL(FnDclNode),
+  VARDCL(VarDclNode),
+  
   // MACRO 
   MAC(MacNode),
-  
-  // DATA_NODE (VARIABLE WITH DATA)
-  DATA(DataNode),
   
   // STATEMENT
   STM(StmNode),
@@ -131,18 +145,35 @@ pub struct VTyNode; // Void Type
 
 // LIST
 pub struct ListNode;
+pub struct PListNode;
+pub struct BListNode;
+pub struct SListNode;
+pub struct AListNode;
 
 // VARIABLE
 pub struct VarNode; // Variable
 
 // TYPE_DECLARATION
-pub struct TdecNode;   // Type Declaration
-pub struct STdecNode; // pub Struct Type Declaration
-pub struct UTdecNode; // Union Type Declaration
-pub struct ETdecNode; // Enum Type Declaration
+pub struct TdclNode;   // Type Declaration
+pub struct SdclNode; // pub Struct Type Declaration
+pub struct UdclNode; // Union Type Declaration
+pub struct EdclNode; // Enum Type Declaration
+
+// TYPE_ALIASING
+pub struct TypeNode;
+
+// TYPE_FORWARD_DECLARATION
+pub struct TfdclNode; // Type Forward Declaration
+pub struct SfdclNode; // Struct Forward Declaration
+pub struct UfdclNode; // Union Forward Declaration
+pub struct EfdclNode; // Enum Forward Declaration
 
 // FUNCTION
 pub struct FnNode;
+
+  // DECLARATIONS
+pub struct FnDclNode;
+pub struct VarDclNode;
 
 // MACRO 
 pub struct MacNode;
