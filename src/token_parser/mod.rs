@@ -9,26 +9,19 @@ use crate::fstack::*;
 
 pub struct TokenParser {
   input: Input,
-  fs: Fstack<Token>,
 }
 
 impl TokenParser {
   pub fn new(input: Input) -> Self {
     Self {
       input: input,
-      fs: Fstack::new(),
     }
+  }
+  
+  pub fn next() -> Token {
+    Token::EOF
   }
   
 }
 
 
-impl FstackT<Token> for TokenParser {
-  fn next_item(&mut self) -> Option<Rc<Token>> {
-    Some(Rc::new(Token::ID(String::from("lol"))))
-  }
-
-  fn fs<'a>(&'a mut self) -> &'a mut Fstack<Token> {
-    &mut self.fs
-  }
-}

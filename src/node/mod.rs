@@ -1,5 +1,7 @@
 use crate::node_parser::Parser;
 
+mod type;
+use type::*;
 
 //---------------------------------------
 // NODE
@@ -45,6 +47,20 @@ pub enum Node {
   VTY(VTyNode), // Void Type
   ITY(ITyNode), // Intrinsic Type
   
+  // PRIMITIVE_TYPES
+  TYINT(TyIntNode), 
+  TYUINT(TyUintNode),
+  TYU8(TyU8Node),
+  TYI8(TyI8Node),
+  TYU16(TyU16Node),
+  TYI16(TyI16Node),
+  TYU32(TyU32Node),
+  TYI32(TyI32Node),
+  TYU64(TyU64Node),
+  TYI64(TyI64Node),
+  TYF32(TyF32Node),
+  TYF64(TyF64Node),
+ 
   // LIST
   LIST(ListNode),
   PLIST(PListNode), // Paranthesis List ( )
@@ -131,17 +147,6 @@ pub struct OpLbNode; //    {    123  left brace
 pub struct OpVbNode; //    |    124  vertical bar
 pub struct OpRbNode; //    }    125  right brace
 pub struct OpTdNode; //    ~    126  tilde
-
-// TYPES
-pub struct TyNode;
-pub struct MTyNode; // Primitive Type
-pub struct ITyNode; // Intrinsic Type
-pub struct PTyNode; // Pointer Type
-pub struct ATyNode; // Array Type
-pub struct CTyNode; // Compound Type
-pub struct FTyNode; // Function Type
-pub struct OTyNode; // Option Type
-pub struct VTyNode; // Void Type
 
 // LIST
 pub struct ListNode;

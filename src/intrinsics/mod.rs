@@ -1,27 +1,25 @@
 use crate::node::*;
 
-type Orn = Option<Rc<Node>>
-
-pub fn parse(id: &str, input: &mut NodeParser, env: &Env) -> Orn {
+pub fn parse(id: &str, input: &mut NodeParser, env: &Env) -> Option<Node> {
   match id {
-    "int" => parse_int(input, env),
-    "uint" => parse_uint(input, env),
-    "u8" => parse_u8(input, env),
-    "i8" => parse_i8(input, env),
-    "u16" => parse_u16(input, env),
-    "i16" => parse_i16(input, env),
-    "u32" => parse_u32(input, env),
-    "i32" => parse_i32(input, env),
-    "u64" => parse_u64(input, env),
-    "i64" => parse_i64(input, env),
-    "f32" => parse_f32(input, env),
-    "f64" => parse_f64(input, env),
+    "int" => Node::TYINT(TintNode::new()),
+    "uint" => Node::TYUINT(TuintNode::new()),
+    "u8" => Node::TYU8(TyU8Node::new()),
+    "i8" => Node::TYI8(TyI8Node::new()),
+    "u16" => Node::TYU16(TyU16Node::new()),
+    "i16" => Node::TYI16(TyI16Node::new()),
+    "u32" => Node::TYU32(TyU32Node::new()),
+    "i32" => Node::TYI32(TyI32Node::new()),
+    "u64" => Node::TYU64(TyU64Node::new()),
+    "i64" => Node::TYI64(TyI64Node::new()),
+    "f32" => Node::TYF32(TyF32Node::new()),
+    "f64" => Node::TYF64(TyF64Node::new()),
     
+    "void" => Node::VTY(VTyNode::new()),
 
     "tp" => parse_tp(input, env),
     "ta" => parse_ta(input, env),
     "tf" => parse_tf(input, env),
-    "void" => parse_void(input, env),
 
     "var" => parse_var(input, env),
     
@@ -58,107 +56,114 @@ pub fn parse(id: &str, input: &mut NodeParser, env: &Env) -> Orn {
   }
 }
 
-fn expect<T: Span>(node: Option<Rc<T>>) -> Option<Rc<T>> {
+fn expect<T: Span>(node: Option<T>) -> Option<T> {
   if node.is_none() {
     println!("unexpected token at {}", node.span_pos());
   }
   node
 }
 
-fn parse_tp(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
-  expect(TyNode::parse(input, env))
+fn parse_tp(input: &mut NodeParser, env: &Env) -> Option<Node> {
+  let ty = expect(TyNode::parse(input, env))?;
+  Node::PTY(PTyNode::new(ty))
 }
 
-fn parse_ta(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
-  let ty = expect(TyNode::parse(input, env));
-  let len = expect(ExpNode::parse(input, env));
+fn parse_ta(input: &mut NodeParser, env: &Env) -> Option<Node> {
+  let ty = expect(TyNode::parse(input, env))?;
+  let len = expect(ExpNode::parse(input, env))?;
+  /*
   if len.ty.tag() != Tag::Int {
     println!("expected length of array to be of type integer");
     return None
   }
+  */
+  
+  Node::ATY(ATyNode::new(ty, len))
 }
 
-fn parse_tf(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_tf(input: &mut NodeParser, env: &Env) -> Option<Node> {
+  let list = expect(PListNode::parse(input, env))?;
+  let ty = expect(TyNode::parse(input, env))?;
+  
+}
+
+fn parse_void(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_void(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
 
-}
-
-
-fn parse_var(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_var(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
-fn parse_struct(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_struct(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_union(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_union(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_enum(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_enum(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
 
     // type def
-fn parse_type(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_type(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
-fn parse_sfd(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_sfd(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_ufd(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_ufd(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_efd(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_efd(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
-fn parse_fn(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_fn(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
     // function declaration
-fn parse_fd(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_fd(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
     // variable declaration
-fn parse_vd(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_vd(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
-fn parse_mac(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_mac(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
     
-fn parse_estm(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_estm(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_lstm(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_lstm(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_jstm(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_jstm(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
-fn parse_bstm(input: &mut NodeParser, env: &Env) -> Option<Rc<Node>> {
+fn parse_bstm(input: &mut NodeParser, env: &Env) -> Option<Node> {
 
 }
 
